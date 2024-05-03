@@ -16,7 +16,7 @@ const main = async () => {
         username: "root",
         password: "8Fifteenpm",
         logging: true,
-        synchronize: true,
+        synchronize: false,
         entities: [Users],
     });
 
