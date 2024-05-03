@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache, useMutation } from '@apollo/client';
+import { CREATE_USER } from "./graphql/Mutation";
 import './App.css';
 
 function App() {
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [yearsInPractice, setYearsInPractice] = useState(0);
   const [influence, setInfluence] = useState("");
+
+  const [createUser, { error }] = useMutation(CREATE_USER);
 
   const client = new ApolloClient({
     uri: 'http://localhost:3001/graphql',
@@ -57,7 +61,19 @@ function App() {
             console.log("INFLUENCE: ", influence);  
           }}
         />
-        <button >Create User</button>
+        <button onClick={() => {
+          createUser(
+            {
+              variables: {
+                name: name,
+                username: username,
+                password: password,
+                yearsInPractice: yearsInPractice,
+                influence: influence
+            }
+            }
+          )
+        }}>Create User</button>
       </div>
     </ApolloProvider>
   );
