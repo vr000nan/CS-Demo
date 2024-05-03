@@ -3,6 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, useMutation } from '@apoll
 import { CREATE_USER } from "./graphql/Mutation";
 import './App.css';
 import CreateUser from './components/CreateUser';
+import ListOfUsers from './components/ListOfUsers';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <CreateUser />
+      <ListOfUsers />
     </ApolloProvider>
   );
 }
