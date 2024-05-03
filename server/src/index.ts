@@ -25,7 +25,7 @@ const main = async () => {
         console.log("Data Source has been initialized!");
     } catch (error) {
         console.error("Error during Data Source initialization:", error);
-        return; // Stop further execution in case of connection failure
+        return; 
     }
 
     const app = express();
