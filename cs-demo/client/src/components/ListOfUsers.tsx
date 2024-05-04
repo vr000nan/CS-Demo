@@ -12,8 +12,7 @@ export default function ListOfUsers() {
     }
     if (data) {
         console.log("DATA: ", data);
-        // render your data here
     }
 
-    return <div>howdy</div>;
+    return <div>No Users Found.</div>;
 }

@@ -2,10 +2,9 @@ import gql from "graphql-tag";
 
 export const GET_ALL_USERS = gql`
 query getAllUsers {
-    users {
+    getAllUsers {
         name
         username
-        password
         yearsInPractice
         influence
     }
