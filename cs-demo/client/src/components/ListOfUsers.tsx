@@ -14,5 +14,15 @@ export default function ListOfUsers() {
         console.log("DATA: ", data);
     }
 
-    return <div>No Users Found.</div>;
+    return <div>{data && (data.getAllUsers.map((user: any) => {
+        return (
+            <div>
+                {" "}
+                {user.name} 
+                {user.username} 
+                {user.yearsInPractice} 
+                {user.influence} 
+            </div>
+        )
+    }))}</div>;
 }

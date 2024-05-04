@@ -14,8 +14,8 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <CreateUser />
       <ListOfUsers />
+      <CreateUser />
     </ApolloProvider>
   );
 }
