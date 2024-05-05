@@ -8,64 +8,55 @@ export default function CreateUser() {
     const [password, setPassword] = useState("");
     const [yearsInPractice, setYearsInPractice] = useState(0);
     const [influence, setInfluence] = useState("");
-  
+
     const [createUser, { error }] = useMutation(CREATE_USER);
 
+    if (error) {
+        console.error("Error creating user:", error);
+    }
+
     return (
-        <div className='createUser'>
-        <input
-          type="text"
-          placeholder='Name'
-          onChange={(e) => {
-            setName(e.target.value);
-            console.log("NAME: ", name); 
-          }}
-        />
-        <input
-          type="text"
-          placeholder='Username'
-          onChange={(e) => {
-            setUsername(e.target.value);
-            console.log("USERNAME: ", username); 
-          }}
-        />
-        <input
-          type="password"
-          placeholder='Password'
-          onChange={(e) => {
-            setPassword(e.target.value);
-            console.log("PASSWORD: ", password); 
-          }}
-        />
-        <input
-          type="number"
-          placeholder='Years in Practice'
-          onChange={(e) => {
-            setYearsInPractice(Number(e.target.value));  
-            console.log("YEARS IN PRACTICE: ", yearsInPractice);  
-          }}
-        />
-        <input
-          type="text"
-          placeholder='Influence'
-          onChange={(e) => {
-            setInfluence(e.target.value);
-            console.log("INFLUENCE: ", influence);  
-          }}
-        />
-        <button onClick={() => {
-          createUser(
-            {
-              variables: {
-                name: name,
-                username: username,
-                password: password,
-                yearsInPractice: yearsInPractice,
-                influence: influence
-            }
-            }
-          )
-        }}>Create User</button>
-      </div>
+        <div className="formContainer">
+            <input
+                className="inputField"
+                type="text"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="number"
+                placeholder="Years in Practice"
+                onChange={(e) => setYearsInPractice(Number(e.target.value))}
+            />
+            <input
+                className="inputField"
+                type="text"
+                placeholder="Influence"
+                onChange={(e) => setInfluence(e.target.value)}
+            />
+            <button
+                className="updateButton"
+                onClick={() => {
+                    createUser({
+                        variables: { name, username, password, yearsInPractice, influence }
+                    });
+                }}
+            >
+                Create User
+            </button>
+        </div>
     );
 }
