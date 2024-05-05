@@ -9,7 +9,6 @@ export default function ListOfUsers() {
     if (loading) return <div>Loading...</div>;
     if (queryError) {
         console.error("Error fetching data: ", queryError);
-        console.log("Full error details:", queryError.networkError, queryError.graphQLErrors);
         return <div>Error loading users.</div>;
     }
 
@@ -22,11 +21,14 @@ export default function ListOfUsers() {
     }
 
     return (
-        <div>
+        <div className="userContainer">
             {data.getAllUsers.map((user: any) => (
-                <div key={user.id}>
-                    {user.name} {user.username} {user.yearsInPractice} {user.influence}
-                    <button onClick={() => deleteUser({ variables: { id: user.id } })}>
+                <div className="userCard" key={user.id}>
+                    <div>Name: {user.name}</div>
+                    <div>Username: {user.username}</div>
+                    <div>Years Active: {user.yearsInPractice}</div>
+                    <div>Notable Achievements: {user.influence}</div>
+                    <button className="button" onClick={() => deleteUser({ variables: { id: user.id } })}>
                         Delete User
                     </button>
                 </div>
