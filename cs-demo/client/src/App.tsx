@@ -4,6 +4,7 @@ import { CREATE_USER } from "./graphql/Mutation";
 import './App.css';
 import CreateUser from './components/CreateUser';
 import ListOfUsers from './components/ListOfUsers';
+import UpdatePassword from './components/UpdatePassword';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <ApolloProvider client={client}>
       <ListOfUsers />
       <CreateUser />
+      <UpdatePassword />
     </ApolloProvider>
   );
 }
