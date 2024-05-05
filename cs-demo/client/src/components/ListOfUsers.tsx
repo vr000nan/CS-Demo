@@ -26,7 +26,7 @@ export default function ListOfUsers() {
                 <div className="userCard" key={user.id}>
                     <div>Name: {user.name}</div>
                     <div>Username: {user.username}</div>
-                    <div>Years Active: {user.yearsInPractice}</div>
+                    <div>Years In Practice: {user.yearsInPractice}</div>
                     <div>Notable Achievements: {user.influence}</div>
                     <button className="button" onClick={() => deleteUser({ variables: { id: user.id } })}>
                         Delete User

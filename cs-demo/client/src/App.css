@@ -2,19 +2,27 @@
 * {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    margin-top: 1 auto;
+}
+
+.layoutContainer {
+    display: flex; 
+    gap: 10px; 
+    padding: 5px;
 }
 
 .userContainer {
     background-color: #f2f2f2;
     color: #ffffff;
     padding: 20px;
-    margin: 1.5% auto;
+    margin-left: 25%;
     max-width: 600px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .userCard {
@@ -36,22 +44,27 @@
 }
 
 .button {
-    background: #bb2323;
-    color: #ffffff;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #be1a1a;
+    color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    align-self: center; 
-    margin-top: 10px; 
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #e93131;
+    transition-duration: 0.4s;
 }
 
 .formContainer {
     background-color: #f2f2f2;
     padding: 20px;
     margin: 20px auto;
-    width: 90%;
+    width: 300px;
     max-width: 500px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -66,7 +79,7 @@
     box-sizing: border-box;
 }
 
-.updateButton {
+.submitButton {
     width: 100%;
     padding: 12px 20px;
     background-color: #007BFF;
@@ -78,7 +91,7 @@
     margin-top: 10px;
 }
 
-.button:hover {
-    background-color: #e93131;
+.submitButton:hover {
+    background-color: #3997fa;
+    transition-duration: 0.4s;
 }
-

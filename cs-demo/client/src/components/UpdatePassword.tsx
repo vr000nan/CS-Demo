@@ -34,7 +34,7 @@ export default function UpdatePassword() {
                 onChange={(e) => setNewPassword(e.target.value)}
             />
             <button
-                className="updateButton"
+                className="submitButton"
                 onClick={() => {
                     updatePassword({
                         variables: { username, oldPassword: currentPassword, newPassword }

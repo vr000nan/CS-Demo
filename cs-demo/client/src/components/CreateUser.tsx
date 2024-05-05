@@ -44,11 +44,11 @@ export default function CreateUser() {
             <input
                 className="inputField"
                 type="text"
-                placeholder="Influence"
+                placeholder="Achievements"
                 onChange={(e) => setInfluence(e.target.value)}
             />
             <button
-                className="updateButton"
+                className="submitButton"
                 onClick={() => {
                     createUser({
                         variables: { name, username, password, yearsInPractice, influence }
