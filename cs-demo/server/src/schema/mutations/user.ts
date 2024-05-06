@@ -22,23 +22,23 @@ export const CREATE_USER = {
 export const UPDATE_PASSWORD = {
     type: MessageType,
     args: {
-        username: { type: GraphQLString },
+        id: { type: GraphQLString },
         oldPassword: { type: GraphQLString },
         newPassword: { type: GraphQLString },
     },
 
     async resolve(parent: any, args: any) {
-        const { username, oldPassword, newPassword } = args;
-        const user = await Users.findOneBy({ username: username });
+        const { id, oldPassword, newPassword } = args;
+        const user = await Users.findOneBy({ id: id });
 
         if (!user) {
-            throw new Error("Username does not exist!");
+            throw new Error("User does not exist!");
         }
 
         const userPassword = user?.password;
 
         if (oldPassword === userPassword) {
-            await Users.update({ username: username }, { password: newPassword });
+            await Users.update({ id: id }, { password: newPassword });
 
             return { successful: true, message: "Successfully updated password!" };
         } else {

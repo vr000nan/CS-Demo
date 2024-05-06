@@ -10,19 +10,21 @@ const UpdateUser: React.FC<UpdateUserProps> = () => {
     const [name, setName] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [yearsInPractice, setYearsInPractice] = useState<number>(0);
+    const [isYearsInPracticeFocused, setIsYearsInPracticeFocused] = useState<boolean>(false);
     const [influence, setInfluence] = useState<string>('');
-  
+
     const resetForm = () => {
-      setName("");
-      setUsername("");
-      setYearsInPractice(0);
-      setInfluence("");
-  };
+        setName("");
+        setUsername("");
+        setYearsInPractice(0);
+        setIsYearsInPracticeFocused(false);
+        setInfluence("");
+    };
 
     const [updateUser, { error }] = useMutation(UPDATE_USER, {
-      onCompleted: () => resetForm(),  
-      onError: (error) => console.error("Error updating user:", error),
-      refetchQueries: [{ query: GET_ALL_USERS }],
+        onCompleted: () => resetForm(),
+        onError: (error) => console.error("Error updating user:", error),
+        refetchQueries: [{ query: GET_ALL_USERS }],
     });
 
     return (
@@ -51,8 +53,10 @@ const UpdateUser: React.FC<UpdateUserProps> = () => {
             <input
                 className="inputField"
                 type="number"
-                value={yearsInPractice}
+                value={isYearsInPracticeFocused ? yearsInPractice : yearsInPractice || ""}
                 placeholder="Years in Practice"
+                onFocus={() => setIsYearsInPracticeFocused(true)}
+                onBlur={() => setIsYearsInPracticeFocused(false)}
                 onChange={(e) => setYearsInPractice(Number(e.target.value))}
             />
             <input
