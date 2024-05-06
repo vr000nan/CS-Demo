@@ -9,6 +9,7 @@ export default function CreateUser() {
     const [password, setPassword] = useState("");
     const [yearsInPractice, setYearsInPractice] = useState(0);
     const [influence, setInfluence] = useState("");
+    const [message, setMessage] = useState(""); 
 
     const resetForm = () => {
         setName("");
@@ -16,13 +17,31 @@ export default function CreateUser() {
         setPassword("");
         setYearsInPractice(0);
         setInfluence("");
+        setMessage("");
     };
 
     const [createUser, { error }] = useMutation(CREATE_USER, {
-        onCompleted: () => resetForm(),  
-        refetchQueries: [{ query: GET_ALL_USERS }],  
-        onError: (error) => console.error("Error creating user:", error)
+        onCompleted: () => {
+            setMessage("User successfully created!");  
+            resetForm();  
+        },
+        onError: (error) => {
+            console.error("Error creating user:", error);
+            setMessage(error.message); 
+        },
+        refetchQueries: [{ query: GET_ALL_USERS }],
     });
+
+    const handleSubmit = () => {
+        if (!name || !username || !password || yearsInPractice === 0 || !influence) {
+            setMessage("Please fill in all fields before submitting.");
+            return;
+        }
+
+        createUser({
+            variables: { name, username, password, yearsInPractice, influence }
+        });
+    };
 
     return (
         <div className="formContainer">
@@ -61,13 +80,10 @@ export default function CreateUser() {
                 placeholder="Achievements"
                 onChange={(e) => setInfluence(e.target.value)}
             />
+            {message}
             <button
                 className="submitButton"
-                onClick={() => {
-                    createUser({
-                        variables: { name, username, password, yearsInPractice, influence }
-                    });
-                }}
+                onClick={handleSubmit}
             >
                 Create User
             </button>
