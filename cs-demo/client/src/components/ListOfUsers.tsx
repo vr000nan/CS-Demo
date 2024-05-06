@@ -4,7 +4,9 @@ import { DELETE_USER } from "../graphql/Mutation";
 
 export default function ListOfUsers() {
     const { data, error: queryError, loading } = useQuery(GET_ALL_USERS);
-    const [deleteUser, { error: mutationError }] = useMutation(DELETE_USER);
+    const [deleteUser, { error: mutationError }] = useMutation(DELETE_USER, {
+        refetchQueries: [{ query: GET_ALL_USERS }],
+    });
 
     if (loading) return <div>Loading...</div>;
     if (queryError) {
