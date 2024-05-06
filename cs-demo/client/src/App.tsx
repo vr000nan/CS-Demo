@@ -1,6 +1,4 @@
-import React from 'react';
-
-import './App.css'; // Ensure CSS is imported
+import './App.css'; 
 import ListOfUsers from './components/ListOfUsers';
 import CreateUser from './components/CreateUser';
 import UpdatePassword from './components/UpdatePassword';
