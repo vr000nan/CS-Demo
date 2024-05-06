@@ -26,12 +26,12 @@ export const CREATE_USER = gql`
 
 export const UPDATE_PASSWORD = gql`
     mutation updatePassword(
-        $username: String!, 
+        $id: String!, 
         $oldPassword: String!, 
         $newPassword: String!,
     ){
         updatePassword(
-            username: $username,
+            id: $id,
             oldPassword: $oldPassword,
             newPassword: $newPassword
         ){

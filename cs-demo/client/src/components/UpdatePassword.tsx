@@ -3,19 +3,27 @@ import { useState } from "react";
 import { UPDATE_PASSWORD } from "../graphql/Mutation";
 
 export default function UpdatePassword() {
-    const [username, setUsername] = useState("");
+    const [userId, setUserId] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [message, setMessage] = useState(""); 
 
     const resetForm = () => {
-        setUsername("");
+        setUserId("");
         setCurrentPassword("");
         setNewPassword("");
+        setMessage(""); 
     };
 
     const [updatePassword, { error }] = useMutation(UPDATE_PASSWORD, {
-        onCompleted: resetForm,
-        onError: (error) => console.error("Error updating password:", error)
+        onCompleted: (data) => {
+            setMessage(data.updatePassword.message); 
+            resetForm();
+        },
+        onError: (error) => {
+            console.error("Error updating password:", error);
+            setMessage(error.message); 
+        }
     });
 
     return (
@@ -23,9 +31,9 @@ export default function UpdatePassword() {
             <input
                 className="inputField"
                 type="text"
-                value={username}
-                placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
+                value={userId}
+                placeholder="User ID"
+                onChange={(e) => setUserId(e.target.value)}
             />
             <input
                 className="inputField"
@@ -41,12 +49,13 @@ export default function UpdatePassword() {
                 placeholder="New Password"
                 onChange={(e) => setNewPassword(e.target.value)}
             />
+            {message && <p>{message}</p>}
             <button
                 className="submitButton"
                 onClick={() => {
                     updatePassword({
                         variables: {
-                            username: username,
+                            id: userId,
                             oldPassword: currentPassword,
                             newPassword: newPassword
                         }
