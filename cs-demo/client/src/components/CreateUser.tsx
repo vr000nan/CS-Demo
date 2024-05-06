@@ -4,33 +4,37 @@ import { CREATE_USER } from "../graphql/Mutation";
 import { GET_ALL_USERS } from "../graphql/Queries"; 
 
 export default function CreateUser() {
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [yearsInPractice, setYearsInPractice] = useState(0);
-    const [influence, setInfluence] = useState("");
-    const [message, setMessage] = useState(""); 
+    const [name, setName] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [yearsInPractice, setYearsInPractice] = useState<number>(0);
+    const [isYearsInPracticeFocused, setIsYearsInPracticeFocused] = useState<boolean>(false);
+    const [influence, setInfluence] = useState<string>('');
+    const [message, setMessage] = useState<string>(''); 
 
     const resetForm = () => {
         setName("");
         setUsername("");
         setPassword("");
         setYearsInPractice(0);
+        setIsYearsInPracticeFocused(false);
         setInfluence("");
         setMessage("");
     };
 
     const [createUser, { error }] = useMutation(CREATE_USER, {
         onCompleted: () => {
-            setMessage("User successfully created!");  
-            resetForm();  
+            console.log("Mutation completed");
+            setMessage("User successfully created!");
+            resetForm();
         },
         onError: (error) => {
             console.error("Error creating user:", error);
-            setMessage(error.message); 
+            setMessage(error.message);
         },
         refetchQueries: [{ query: GET_ALL_USERS }],
     });
+    
 
     const handleSubmit = () => {
         if (!name || !username || !password || yearsInPractice === 0 || !influence) {
@@ -69,8 +73,10 @@ export default function CreateUser() {
             <input
                 className="inputField"
                 type="number"
-                value={yearsInPractice}
+                value={isYearsInPracticeFocused ? yearsInPractice : yearsInPractice || ""}
                 placeholder="Years in Practice"
+                onFocus={() => setIsYearsInPracticeFocused(true)}
+                onBlur={() => setIsYearsInPracticeFocused(false)}
                 onChange={(e) => setYearsInPractice(Number(e.target.value))}
             />
             <input
@@ -81,6 +87,7 @@ export default function CreateUser() {
                 onChange={(e) => setInfluence(e.target.value)}
             />
             {message}
+
             <button
                 className="submitButton"
                 onClick={handleSubmit}

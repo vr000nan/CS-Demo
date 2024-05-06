@@ -68,7 +68,7 @@ const UpdateUser: React.FC<UpdateUserProps> = () => {
                 className="inputField"
                 type="text"
                 value={influence}
-                placeholder="Influence"
+                placeholder="Achievements"
                 onChange={(e) => setInfluence(e.target.value)}
             />
             {errorMessage}

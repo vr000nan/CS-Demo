@@ -32,7 +32,7 @@ export const UPDATE_PASSWORD = {
         const user = await Users.findOneBy({ id: id });
 
         if (!user) {
-            throw new Error("User does not exist!");
+            throw new Error("User with that ID does not exist!");
         }
 
         const userPassword = user?.password;
@@ -61,7 +61,7 @@ export const UPDATE_USER = {
         const user = await Users.findOneBy({ id: id });
 
         if (!user) {
-            throw new Error("User not found!");
+            throw new Error("User with that ID does not exist!");
         }
 
         name && (user.name = name);
