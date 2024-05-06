@@ -6,23 +6,23 @@ export default function UpdatePassword() {
     const [userId, setUserId] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [message, setMessage] = useState(""); 
+    const [message, setMessage] = useState("");
 
     const resetForm = () => {
         setUserId("");
         setCurrentPassword("");
         setNewPassword("");
-        setMessage(""); 
+        setMessage("");
     };
 
-    const [updatePassword, { error }] = useMutation(UPDATE_PASSWORD, {
+    const [updatePassword] = useMutation(UPDATE_PASSWORD, {
         onCompleted: (data) => {
-            setMessage(data.updatePassword.message); 
+            setMessage(data.updatePassword.message);
             resetForm();
         },
         onError: (error) => {
             console.error("Error updating password:", error);
-            setMessage(error.message); 
+            setMessage(error.message);
         }
     });
 
@@ -32,7 +32,7 @@ export default function UpdatePassword() {
                 className="inputField"
                 type="text"
                 value={userId}
-                placeholder="User ID"
+                placeholder="ID"
                 onChange={(e) => setUserId(e.target.value)}
             />
             <input

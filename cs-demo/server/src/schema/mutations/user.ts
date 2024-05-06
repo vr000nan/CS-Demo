@@ -42,7 +42,7 @@ export const UPDATE_PASSWORD = {
 
             return { successful: true, message: "Successfully updated password!" };
         } else {
-            throw new Error("Passwords do not match!");
+            throw new Error("Password is incorrect!");
         }
     }
 }
