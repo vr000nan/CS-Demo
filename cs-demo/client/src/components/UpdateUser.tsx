@@ -9,7 +9,7 @@ const UpdateUser: React.FC<UpdateUserProps> = () => {
     const [id, setId] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [username, setUsername] = useState<string>('');
-    const [yearsInPractice, setYearsInPractice] = useState<number>(0);
+    const [yearsInPractice, setYearsInPractice] = useState<number>();
     const [isYearsInPracticeFocused, setIsYearsInPracticeFocused] = useState<boolean>(false);
     const [influence, setInfluence] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string>(''); 
@@ -78,6 +78,8 @@ const UpdateUser: React.FC<UpdateUserProps> = () => {
                     updateUser({
                         variables: { id, name, username, yearsInPractice, influence }
                     });
+
+                    alert("User Updated Successfully!");
                 }}
             >
                 Update User

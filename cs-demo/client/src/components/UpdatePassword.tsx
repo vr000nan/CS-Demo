@@ -8,6 +8,17 @@ export default function UpdatePassword() {
     const [newPassword, setNewPassword] = useState("");
     const [message, setMessage] = useState("");
 
+    const [updatePassword] = useMutation(UPDATE_PASSWORD, {
+        onCompleted: (data) => {
+            setMessage(data.updatePassword.message); // Display success message from server
+            resetForm();
+        },
+        onError: (error) => {
+            console.error("Error updating password:", error);
+            setMessage(error.message); // Display error message based on server response
+        }
+    });
+
     const resetForm = () => {
         setUserId("");
         setCurrentPassword("");
@@ -15,16 +26,17 @@ export default function UpdatePassword() {
         setMessage("");
     };
 
-    const [updatePassword] = useMutation(UPDATE_PASSWORD, {
-        onCompleted: (data) => {
-            setMessage(data.updatePassword.message);
-            resetForm();
-        },
-        onError: (error) => {
-            console.error("Error updating password:", error);
-            setMessage(error.message);
+    const handleSubmit = () => {
+        if (!userId || !currentPassword || !newPassword) {
+            setMessage("All fields must be filled out.");
+            return;
         }
-    });
+        updatePassword({
+            variables: { id: userId, oldPassword: currentPassword, newPassword: newPassword }
+        });
+            alert("Password Changed Successfully!");
+            resetForm();
+    };
 
     return (
         <div className="formContainer">
@@ -52,15 +64,7 @@ export default function UpdatePassword() {
             {message && <p>{message}</p>}
             <button
                 className="submitButton"
-                onClick={() => {
-                    updatePassword({
-                        variables: {
-                            id: userId,
-                            oldPassword: currentPassword,
-                            newPassword: newPassword
-                        }
-                    });
-                }}
+                onClick={handleSubmit}
             >
                 Update Password
             </button>

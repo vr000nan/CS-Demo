@@ -7,7 +7,7 @@ export default function CreateUser() {
     const [name, setName] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [yearsInPractice, setYearsInPractice] = useState<number>(0);
+    const [yearsInPractice, setYearsInPractice] = useState<number>();
     const [isYearsInPracticeFocused, setIsYearsInPracticeFocused] = useState<boolean>(false);
     const [influence, setInfluence] = useState<string>('');
     const [message, setMessage] = useState<string>(''); 
@@ -45,6 +45,8 @@ export default function CreateUser() {
         createUser({
             variables: { name, username, password, yearsInPractice, influence }
         });
+
+        alert("User Created Successfully!");
     };
 
     return (
