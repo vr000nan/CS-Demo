@@ -10,8 +10,8 @@ function MainComponent() {
             <ListOfUsers />
             <div>
                 <CreateUser />
+                <UpdateUser />
                 <UpdatePassword />
-                <UpdateUser/>
             </div>
         </div>
     );

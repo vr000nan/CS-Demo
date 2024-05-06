@@ -1,83 +1,70 @@
-import { useMutation } from '@apollo/client';
-import React, { useState } from 'react';
-import { UPDATE_USER } from '../graphql/Mutation';
+import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
+import { CREATE_USER } from "../graphql/Mutation";
+import { GET_ALL_USERS } from "../graphql/Queries"; 
 
-interface UserData {
-  name: string;
-  username: string;
-  yearsInPractice: number;
-  influence: string;
-}
+export default function UpdateUser() {
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [yearsInPractice, setYearsInPractice] = useState(0);
+  const [influence, setInfluence] = useState("");
 
-interface UpdateUserProps {
-  id: string; // `id` is required
-}
-
-const UpdateUser: React.FC<UpdateUserProps> = ({ id }) => {
-  const [userData, setUserData] = useState<UserData>({
-    name: '',
-    username: '',
-    yearsInPractice: 0,
-    influence: ''
-  });
-
-  const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER, {
-    onCompleted: () => console.log("Update successful!"),
-    onError: (error) => console.error("Error updating user:", error.message)
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData({
-      ...userData,
-      [name]: name === 'yearsInPractice' ? parseInt(value, 10) : value
-    });
+  const resetForm = () => {
+      setName("");
+      setUsername("");
+      setPassword("");
+      setYearsInPractice(0);
+      setInfluence("");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent the default form behavior
-    updateUser({
-      variables: {
-        id, // Use the static or prop ID here
-        ...userData
-      }
-    });
-  };
+  const [createUser, { error }] = useMutation(CREATE_USER, {
+      onCompleted: () => resetForm(),  
+      refetchQueries: [{ query: GET_ALL_USERS }],  
+      onError: (error) => console.error("Error creating user:", error)
+  });
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        value={userData.name}
-        onChange={handleChange}
-        placeholder="Name"
-      />
-      <input
-        type="text"
-        name="username"
-        value={userData.username}
-        onChange={handleChange}
-        placeholder="Username"
-      />
-      <input
-        type="number"
-        name="yearsInPractice"
-        value={userData.yearsInPractice.toString()}
-        onChange={handleChange}
-        placeholder="Years in Practice"
-      />
-      <input
-        type="text"
-        name="influence"
-        value={userData.influence}
-        onChange={handleChange}
-        placeholder="Influence"
-      />
-      <button type="submit">Update User</button>
-      {data && data.updateUser && <p>{data.updateUser.message}</p>}
-    </form>
+      <div className="formContainer">
+          <input
+              className="inputField"
+              type="text"
+              value={name}
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+          />
+          <input
+              className="inputField"
+              type="text"
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+              className="inputField"
+              type="number"
+              value={yearsInPractice}
+              placeholder="Years in Practice"
+              onChange={(e) => setYearsInPractice(Number(e.target.value))}
+          />
+          <input
+              className="inputField"
+              type="text"
+              value={influence}
+              placeholder="Achievements"
+              onChange={(e) => setInfluence(e.target.value)}
+          />
+          <button
+              className="submitButton"
+              onClick={() => {
+                  createUser({
+                      variables: { name, username, password, yearsInPractice, influence }
+                  });
+              }}
+          >
+              Update User
+          </button>
+      </div>
   );
-};
+}
 
-export default UpdateUser;
