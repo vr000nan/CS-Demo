@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# User Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This User Management System allows clients to create, delete, and update users directly from the front-end interface. It's built using Node.js, TypeScript, MySQL, and GraphQL, offering a robust backend with a GraphQL API and a reactive front-end experience.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Create Users**: Add new users with details such as name, username, password, years in practice, and notable achievements.
+- **Delete Users**: Remove existing users from the system.
+- **Update Password**: Users can update their passwords.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3002) to view it in the browser.
+Before you begin, ensure you have met the following requirements:
+- Node.js
+- MySQL
+- npm or yarn
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Follow these steps to install the project locally:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-project-name.git
+   cd your-project-name
 
-### `npm run build`
+2. Install the dependencies:
+   npm install (or yarn install)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Configuration
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Set up your MySQL database and note the credentials.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a .env file in the project root and fill in the following environment variables:
+   makefile
+   Copy code
+   DB_HOST=localhost
+   DB_USER=your_mysql_username
+   DB_PASS=your_mysql_password
+   DB_NAME=your_database_name
 
-### `npm run eject`
+## Running the Application
+   To run the application, execute:
+   npm start (or yarn start)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Using the Application
+   Navigate to http://localhost:3000 (or whichever port you have configured) to view the interface. You  can:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   Add a user by filling out the form and clicking the "Create User" button.
+   Update a user's password by entering the username, current password, and new password, then clicking  the "Update Password" button.
+   Delete a user by clicking the "Delete User" button next to the user's details.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## API Endpoints
+   GraphQL endpoints (typically accessed via POST requests):
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   /graphql - Endpoint for all GraphQL queries and mutations.
+   Contributing
+   Contributions to the project are welcome. Please follow these steps to contribute:
 
-## Learn More
+   Fork the repository.
+   Create a branch (git checkout -b feature/YourFeature).
+   Commit your changes (git commit -am 'Add some feature').
+   Push to the branch (git push origin feature/YourFeature).
+   Open a pull request.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
+This project is licensed under the MIT License.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contact
+If you have any questions, please contact Nan Wroblewski at vr000nan@gmail.com.

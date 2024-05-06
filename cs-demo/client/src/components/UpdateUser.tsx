@@ -1,76 +1,59 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { CREATE_USER } from "../graphql/Mutation";
-import { GET_ALL_USERS } from "../graphql/Queries"; 
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_USER } from '../graphql/Mutation';
+import { GET_ALL_USERS } from '../graphql/Queries';
 
-export default function CreateUser() {
+interface UpdateUserProps {}
+
+const UpdateUser: React.FC<UpdateUserProps> = () => {
+    const [id, setId] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
     const [yearsInPractice, setYearsInPractice] = useState<number>();
     const [isYearsInPracticeFocused, setIsYearsInPracticeFocused] = useState<boolean>(false);
     const [influence, setInfluence] = useState<string>('');
-    const [message, setMessage] = useState<string>(''); 
+    const [errorMessage, setErrorMessage] = useState<string>(''); 
 
     const resetForm = () => {
         setName("");
         setUsername("");
-        setPassword("");
         setYearsInPractice(0);
         setIsYearsInPracticeFocused(false);
         setInfluence("");
-        setMessage("");
+        setErrorMessage(""); 
     };
 
-    const [createUser, { error }] = useMutation(CREATE_USER, {
-        onCompleted: () => {
-            console.log("Mutation completed");
-            setMessage("User successfully created!");
-            resetForm();
-        },
-        onError: (error) => {
-            console.error("Error creating user:", error);
-            setMessage(error.message);
+    const [updateUser, { error }] = useMutation(UPDATE_USER, {
+        onCompleted: () => resetForm(),
+        onError: (err) => {
+            console.error("Error updating user:", err);
+            setErrorMessage(err.message || "An error occurred while updating the user."); 
         },
         refetchQueries: [{ query: GET_ALL_USERS }],
     });
-    
-
-    const handleSubmit = () => {
-        if (!name || !username || !password || yearsInPractice === 0 || !influence) {
-            setMessage("Please fill in all fields before submitting.");
-            return;
-        }
-
-        createUser({
-            variables: { name, username, password, yearsInPractice, influence }
-        });
-
-        alert("User Created Successfully!");
-    };
 
     return (
         <div className="formContainer">
             <input
                 className="inputField"
                 type="text"
+                value={id}
+                placeholder="ID"
+                onChange={(e) => setId(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="text"
                 value={name}
-                placeholder="Name"
+                placeholder="New Name"
                 onChange={(e) => setName(e.target.value)}
             />
             <input
                 className="inputField"
                 type="text"
                 value={username}
-                placeholder="Username"
+                placeholder="New Username"
                 onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                className="inputField"
-                type="password"
-                value={password}
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
             />
             <input
                 className="inputField"
@@ -88,14 +71,21 @@ export default function CreateUser() {
                 placeholder="Achievements"
                 onChange={(e) => setInfluence(e.target.value)}
             />
-            {message}
-
+            {errorMessage}
             <button
                 className="submitButton"
-                onClick={handleSubmit}
+                onClick={() => {
+                    updateUser({
+                        variables: { id, name, username, yearsInPractice, influence }
+                    });
+
+                    alert("User Updated Successfully!");
+                }}
             >
-                Create User
+                Update User
             </button>
         </div>
     );
-}
+};
+
+export default UpdateUser;

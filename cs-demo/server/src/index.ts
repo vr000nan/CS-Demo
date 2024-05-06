@@ -6,7 +6,6 @@ import { DataSource } from "typeorm";
 import { Users } from "./entities/users";
 
 const main = async () => {
-    console.log("BEGINNING...");
 
     const dataSource = new DataSource({
         type: "mysql",

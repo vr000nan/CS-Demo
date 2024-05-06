@@ -25,19 +25,34 @@ export const CREATE_USER = gql`
 `;
 
 export const UPDATE_PASSWORD = gql`
-    mutation updatePassword(
-        $username: String!, 
-        $oldPassword: String!, 
-        $newPassword: String!,
-    ){
-        updatePassword(
-            username: $username,
-            oldPassword: $oldPassword,
-            newPassword: $newPassword
-        ){
+    mutation updatePassword($id: String!, $oldPassword: String!, $newPassword: String!) {
+        updatePassword(id: $id, oldPassword: $oldPassword, newPassword: $newPassword) {
+            successful
             message
         }
     }
+`;
+
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $id: ID!,
+    $name: String,
+    $username: String,
+    $yearsInPractice: Int,
+    $influence: String
+  ) {
+    updateUser(
+      id: $id,
+      name: $name,
+      username: $username,
+      yearsInPractice: $yearsInPractice,
+      influence: $influence
+    ) {
+      successful
+      message
+    }
+  }
 `;
 
 export const DELETE_USER = gql`

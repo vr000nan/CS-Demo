@@ -1,4 +1,4 @@
-import { GraphQLID, GraphQLInt, GraphQLString } from "graphql";
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { UserType } from "../type-definitions/user";
 import { MessageType } from "../type-definitions/messages";
 import { Users } from '../../entities/users';
@@ -22,30 +22,58 @@ export const CREATE_USER = {
 export const UPDATE_PASSWORD = {
     type: MessageType,
     args: {
-        username: { type: GraphQLString },
+        id: { type: GraphQLString },
         oldPassword: { type: GraphQLString },
         newPassword: { type: GraphQLString },
     },
 
     async resolve(parent: any, args: any) {
-        const { username, oldPassword, newPassword } = args;
-        const user = await Users.findOneBy({ username: username });
+        const { id, oldPassword, newPassword } = args;
+        const user = await Users.findOneBy({ id: id });
 
         if (!user) {
-            throw new Error("Username does not exist!");
+            throw new Error("User with that ID does not exist!");
         }
 
         const userPassword = user?.password;
 
         if (oldPassword === userPassword) {
-            await Users.update({ username: username }, { password: newPassword });
+            await Users.update({ id: id }, { password: newPassword });
 
             return { successful: true, message: "Successfully updated password!" };
         } else {
-            throw new Error("Passwords do not match!");
+            throw new Error("Password is incorrect!");
         }
     }
 }
+
+export const UPDATE_USER = {
+    type: MessageType, 
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },  
+        name: { type: GraphQLString },  
+        username: { type: GraphQLString },  
+        yearsInPractice: { type: GraphQLInt },  
+        influence: { type: GraphQLString } 
+    },
+    async resolve(parent: any, args: any) {
+        const { id, name, username, yearsInPractice, influence } = args;
+        const user = await Users.findOneBy({ id: id });
+
+        if (!user) {
+            throw new Error("User with that ID does not exist!");
+        }
+
+        name && (user.name = name);
+        username && (user.username = username);
+        yearsInPractice !== undefined && (user.yearsInPractice = yearsInPractice);
+        influence && (user.influence = influence);
+
+        await Users.save(user);
+
+        return { successful: true, message: "Successfully updated user details!" };
+    }
+};
 
 
 export const DELETE_USER = {

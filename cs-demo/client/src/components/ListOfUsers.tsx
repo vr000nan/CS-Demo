@@ -4,7 +4,9 @@ import { DELETE_USER } from "../graphql/Mutation";
 
 export default function ListOfUsers() {
     const { data, error: queryError, loading } = useQuery(GET_ALL_USERS);
-    const [deleteUser, { error: mutationError }] = useMutation(DELETE_USER);
+    const [deleteUser, { error: mutationError }] = useMutation(DELETE_USER, {
+        refetchQueries: [{ query: GET_ALL_USERS }],
+    });
 
     if (loading) return <div>Loading...</div>;
     if (queryError) {
@@ -24,6 +26,7 @@ export default function ListOfUsers() {
         <div className="userContainer">
             {data.getAllUsers.map((user: any) => (
                 <div className="userCard" key={user.id}>
+                    <div>ID: {user.id}</div>
                     <div>Name: {user.name}</div>
                     <div>Username: {user.username}</div>
                     <div>Years In Practice: {user.yearsInPractice}</div>
