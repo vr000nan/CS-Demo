@@ -40,6 +40,27 @@ export const UPDATE_PASSWORD = gql`
     }
 `;
 
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $id: ID!,
+    $name: String,
+    $username: String,
+    $yearsInPractice: Int,
+    $influence: String
+  ) {
+    updateUser(
+      id: $id,
+      name: $name,
+      username: $username,
+      yearsInPractice: $yearsInPractice,
+      influence: $influence
+    ) {
+      successful
+      message
+    }
+  }
+`;
+
 export const DELETE_USER = gql`
     mutation DeleteUser(
         $id: ID!

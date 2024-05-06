@@ -24,6 +24,7 @@ export default function ListOfUsers() {
         <div className="userContainer">
             {data.getAllUsers.map((user: any) => (
                 <div className="userCard" key={user.id}>
+                    <div>ID: {user.id}</div> {/* Display the user ID */}
                     <div>Name: {user.name}</div>
                     <div>Username: {user.username}</div>
                     <div>Years In Practice: {user.yearsInPractice}</div>

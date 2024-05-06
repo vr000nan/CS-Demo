@@ -1,4 +1,4 @@
-import { GraphQLID, GraphQLInt, GraphQLString } from "graphql";
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from "graphql";
 import { UserType } from "../type-definitions/user";
 import { MessageType } from "../type-definitions/messages";
 import { Users } from '../../entities/users';
@@ -46,6 +46,35 @@ export const UPDATE_PASSWORD = {
         }
     }
 }
+
+export const UPDATE_USER = {
+    type: MessageType,  // Returning a message type to confirm the operation
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },  // Require an ID to know which user to update
+        name: { type: GraphQLString },  // Optional new name
+        username: { type: GraphQLString },  // Optional new username
+        yearsInPractice: { type: GraphQLInt },  // Optional new years in practice
+        influence: { type: GraphQLString }  // Optional new influence
+    },
+    async resolve(parent: any, args: any) {
+        const { id, name, username, yearsInPractice, influence } = args;
+        const user = await Users.findOneBy({ id: id });
+
+        if (!user) {
+            throw new Error("User not found!");
+        }
+
+        // Update fields if they are provided
+        name && (user.name = name);
+        username && (user.username = username);
+        yearsInPractice !== undefined && (user.yearsInPractice = yearsInPractice);
+        influence && (user.influence = influence);
+
+        await Users.save(user);
+
+        return { successful: true, message: "Successfully updated user details!" };
+    }
+};
 
 
 export const DELETE_USER = {
