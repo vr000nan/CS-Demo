@@ -1,70 +1,70 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { CREATE_USER } from "../graphql/Mutation";
-import { GET_ALL_USERS } from "../graphql/Queries"; 
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_USER } from '../graphql/Mutation'; // Adjust the path based on your project structure
 
-export default function UpdateUser() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [yearsInPractice, setYearsInPractice] = useState(0);
-  const [influence, setInfluence] = useState("");
+interface UpdateUserProps {}
 
-  const resetForm = () => {
-      setName("");
-      setUsername("");
-      setPassword("");
-      setYearsInPractice(0);
-      setInfluence("");
-  };
+const UpdateUser: React.FC<UpdateUserProps> = () => {
+    const [id, setId] = useState<string>('');
+    const [name, setName] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+    const [yearsInPractice, setYearsInPractice] = useState<number>(0);
+    const [influence, setInfluence] = useState<string>('');
 
-  const [createUser, { error }] = useMutation(CREATE_USER, {
-      onCompleted: () => resetForm(),  
-      refetchQueries: [{ query: GET_ALL_USERS }],  
-      onError: (error) => console.error("Error creating user:", error)
-  });
+    const [updateUser, { error }] = useMutation(UPDATE_USER, {
+        onCompleted: () => console.log("User updated successfully!"),
+        onError: (error) => console.error("Error updating user:", error)
+    });
 
-  return (
-      <div className="formContainer">
-          <input
-              className="inputField"
-              type="text"
-              value={name}
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
-          />
-          <input
-              className="inputField"
-              type="text"
-              value={username}
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-              className="inputField"
-              type="number"
-              value={yearsInPractice}
-              placeholder="Years in Practice"
-              onChange={(e) => setYearsInPractice(Number(e.target.value))}
-          />
-          <input
-              className="inputField"
-              type="text"
-              value={influence}
-              placeholder="Achievements"
-              onChange={(e) => setInfluence(e.target.value)}
-          />
-          <button
-              className="submitButton"
-              onClick={() => {
-                  createUser({
-                      variables: { name, username, password, yearsInPractice, influence }
-                  });
-              }}
-          >
-              Update User
-          </button>
-      </div>
-  );
-}
+    return (
+        <div className="formContainer">
+            <input
+                className="inputField"
+                type="text"
+                value={id}
+                placeholder="User ID"
+                onChange={(e) => setId(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="text"
+                value={name}
+                placeholder="New Name"
+                onChange={(e) => setName(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="text"
+                value={username}
+                placeholder="New Username"
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+                className="inputField"
+                type="number"
+                value={yearsInPractice}
+                placeholder="Years in Practice"
+                onChange={(e) => setYearsInPractice(Number(e.target.value))}
+            />
+            <input
+                className="inputField"
+                type="text"
+                value={influence}
+                placeholder="Influence"
+                onChange={(e) => setInfluence(e.target.value)}
+            />
+            <button
+                className="submitButton"
+                onClick={() => {
+                    updateUser({
+                        variables: { id, name, username, yearsInPractice, influence }
+                    });
+                }}
+            >
+                Update User
+            </button>
+        </div>
+    );
+};
 
+export default UpdateUser;
