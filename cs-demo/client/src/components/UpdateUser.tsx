@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '../graphql/Mutation'; // Adjust the path based on your project structure
+import { UPDATE_USER } from '../graphql/Mutation';
+import { GET_ALL_USERS } from '../graphql/Queries';
 
 interface UpdateUserProps {}
 
@@ -10,10 +11,18 @@ const UpdateUser: React.FC<UpdateUserProps> = () => {
     const [username, setUsername] = useState<string>('');
     const [yearsInPractice, setYearsInPractice] = useState<number>(0);
     const [influence, setInfluence] = useState<string>('');
+  
+    const resetForm = () => {
+      setName("");
+      setUsername("");
+      setYearsInPractice(0);
+      setInfluence("");
+  };
 
     const [updateUser, { error }] = useMutation(UPDATE_USER, {
-        onCompleted: () => console.log("User updated successfully!"),
-        onError: (error) => console.error("Error updating user:", error)
+      onCompleted: () => resetForm(),  
+      onError: (error) => console.error("Error updating user:", error),
+      refetchQueries: [{ query: GET_ALL_USERS }],
     });
 
     return (

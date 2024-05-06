@@ -48,13 +48,13 @@ export const UPDATE_PASSWORD = {
 }
 
 export const UPDATE_USER = {
-    type: MessageType,  // Returning a message type to confirm the operation
+    type: MessageType, 
     args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },  // Require an ID to know which user to update
-        name: { type: GraphQLString },  // Optional new name
-        username: { type: GraphQLString },  // Optional new username
-        yearsInPractice: { type: GraphQLInt },  // Optional new years in practice
-        influence: { type: GraphQLString }  // Optional new influence
+        id: { type: new GraphQLNonNull(GraphQLID) },  
+        name: { type: GraphQLString },  
+        username: { type: GraphQLString },  
+        yearsInPractice: { type: GraphQLInt },  
+        influence: { type: GraphQLString } 
     },
     async resolve(parent: any, args: any) {
         const { id, name, username, yearsInPractice, influence } = args;
@@ -64,7 +64,6 @@ export const UPDATE_USER = {
             throw new Error("User not found!");
         }
 
-        // Update fields if they are provided
         name && (user.name = name);
         username && (user.username = username);
         yearsInPractice !== undefined && (user.yearsInPractice = yearsInPractice);
