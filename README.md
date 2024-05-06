@@ -47,7 +47,8 @@ Create a .env file in the project root and fill in the following environment var
    Navigate to http://localhost:3000 (or whichever port you have configured) to view the interface. You  can:
 
    Add a user by filling out the form and clicking the "Create User" button.
-   Update a user's password by entering the username, current password, and new password, then clicking  the "Update Password" button.
+   Update a user's password by entering the user's unique ID, current password, and new password, then clicking  the "Update Password" button. You can also update a user's info by entering the user's unique ID,       
+   updating the new fields, and clicking on the "Update User" button.
    Delete a user by clicking the "Delete User" button next to the user's details.
 
 ## API Endpoints
