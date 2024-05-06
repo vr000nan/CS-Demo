@@ -1,11 +1,12 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
-import { GET_ALL_USERS } from "./queries/user"
+import { GET_ALL_USERS, GET_USER_BY_ID } from "./queries/user"
 import { CREATE_USER, DELETE_USER, UPDATE_PASSWORD, UPDATE_USER } from "./mutations/user";
 
 const RootQuery = new GraphQLObjectType({
     name: "RootQuery",
     fields: {
         getAllUsers: GET_ALL_USERS,
+        getUserById: GET_USER_BY_ID
     }
 })
 

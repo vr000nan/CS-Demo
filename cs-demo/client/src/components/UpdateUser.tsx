@@ -10,7 +10,7 @@ interface UserData {
 }
 
 interface UpdateUserProps {
-  id: string;  // `id` is required as per the definition and not editable
+  id: string; // `id` is required
 }
 
 const UpdateUser: React.FC<UpdateUserProps> = ({ id }) => {
@@ -28,16 +28,19 @@ const UpdateUser: React.FC<UpdateUserProps> = ({ id }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserData(prev => ({
-      ...prev,
+    setUserData({
+      ...userData,
       [name]: name === 'yearsInPractice' ? parseInt(value, 10) : value
-    }));
+    });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();  // Prevent default form submission behavior
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent the default form behavior
     updateUser({
-      variables: { id, ...userData }
+      variables: {
+        id, // Use the static or prop ID here
+        ...userData
+      }
     });
   };
 
